@@ -8,14 +8,13 @@ public class CameraProjectionChanger : MonoBehaviour {
 
     private Matrix4x4 _ortho;
     private Matrix4x4 _perspective;
+    private float _aspect;
     [SerializeField] private float fov = 60f;
     [SerializeField] private float near = .3f;
     [SerializeField] private float far = 1000f;
     [SerializeField] private float orthographicSize = 50f;
-
-    private float _aspect;
-
-    //private MatrixBlender _blender;
+    [SerializeField, Range(0f, 1f)] private float zoom;
+    [SerializeField] private float zoomSpeed = 5f;
     private bool _orthoOn = true;
 
     private void Awake() {
@@ -38,8 +37,11 @@ public class CameraProjectionChanger : MonoBehaviour {
             
             BlendToMatrix(projection, 1f);
         }
+
+        zoom += Input.mouseScrollDelta.y * zoomSpeed * Time.deltaTime;
+        zoom = Mathf.Clamp01(zoom);
         
-        
+        _cam.projectionMatrix = MatrixLerp(Ease.EaseOutQuint(zoom));
     }
 
     public static Matrix4x4 MatrixLerp(Matrix4x4 from, Matrix4x4 to, float time) {
