@@ -32,18 +32,21 @@ public class SphericalMesh : MonoBehaviour {
         for (int cubeSide = 0; cubeSide < 6; cubeSide++) {
             Vector3[] vertices = _meshData[cubeSide].vertices;
             int numVertices = _meshData[cubeSide].vertices.Length;
+            Vector2[] uvs = new Vector2[vertices.Length];
 
             for (int vertex = 0; vertex < numVertices; vertex++) {
-                Vector3 pointOnCubeToPointOnSphere = PointOnCubeToPointOnSphere(vertices[vertex]);
-                Coordinate coordinate = PointToCoordinate(pointOnCubeToPointOnSphere);
+                Vector3 pointOnSphere = PointOnCubeToPointOnSphere(vertices[vertex]);
+                Coordinate coordinate = PointToCoordinate(pointOnSphere);
                 //Vector3 coordinateToPoint = CoordinateToPoint(coordinate);
                 //Vector3 spherizedPointWithHeight = SpherizeWithHeight(coordinate, height);
 
-
-                vertices[vertex] = SpherizeWithHeight(pointOnCubeToPointOnSphere, coordinate);
+                uvs[vertex] = UVCoord(coordinate);
+                vertices[vertex] = SpherizeWithHeight(pointOnSphere, coordinate);
                     //pointOnCubeToPointOnSphere + (globeRadius + height * .2f);
                 //vertices[vertex] = PointOnCubeToPointOnSphere(vertices[vertex]);
             }
+
+            _meshData[cubeSide].uvs = uvs;
         }
     }
     
@@ -59,16 +62,24 @@ public class SphericalMesh : MonoBehaviour {
     private float SampleHeightTexture(Coordinate coordinate) {
         //int x = Mathf.FloorToInt(Mathf.Abs(coordinate.longitude) * heightMap.width);
         //int y = Mathf.FloorToInt(Mathf.Abs(coordinate.latitude) * heightMap.height);
-        
-        float normX = Mathf.InverseLerp(-Mathf.PI, Mathf.PI, coordinate.longitude); 
-        float normY = Mathf.InverseLerp(-Mathf.PI * .5f, Mathf.PI * .5f, coordinate.latitude);
 
-        int x = Mathf.FloorToInt(normX * heightMap.width);
-        int y = Mathf.FloorToInt(normY * heightMap.height);
+        Vector2 uvCoord = UVCoord(coordinate);
+        //float normX = Mathf.InverseLerp(-Mathf.PI, Mathf.PI, coordinate.longitude); 
+        //float normY = Mathf.InverseLerp(-Mathf.PI * .5f, Mathf.PI * .5f, coordinate.latitude);
+
+        int x = Mathf.FloorToInt(uvCoord.x * heightMap.width);
+        int y = Mathf.FloorToInt(uvCoord.y * heightMap.height);
     
         float height = heightMap.GetPixel(x, y).grayscale;
         
         return height;
+    }
+
+    private Vector2 UVCoord(Coordinate coordinate) {
+        float normX = Mathf.InverseLerp(-Mathf.PI, Mathf.PI, coordinate.longitude); 
+        float normY = Mathf.InverseLerp(-Mathf.PI * .5f, Mathf.PI * .5f, coordinate.latitude);
+
+        return new Vector2(normX, normY);
     }
 
     // Unit circle's circumference is 2PI radians
@@ -133,7 +144,7 @@ public class SphericalMesh : MonoBehaviour {
         Vector3 axisA = new Vector3(normal.y, normal.z, normal.x);
         Vector3 axisB  = Vector3.Cross(normal, axisA);
         Vector3[] vertices = new Vector3[resolution * resolution];
-        Vector2[] uvs = new Vector2[resolution * resolution];
+        Vector2[] uvs = null;//new Vector2[resolution * resolution];
         int[] triangles = new int[(resolution - 1) * (resolution - 1) * 6];
         int triIndex = 0;
 
@@ -144,7 +155,7 @@ public class SphericalMesh : MonoBehaviour {
                 Vector2 t = new Vector2(x, y) / (resolution - 1f);
                 Vector3 point = normal + axisA * (2 * t.x - 1) + axisB * (2 * t.y - 1);
                 vertices[vertexIndex] = point;
-                uvs[vertexIndex] = new Vector2((float)x / resolution, (float)y / resolution);
+                //uvs[vertexIndex] = new Vector2((float)x / resolution, (float)y / resolution);
 
                 if (x != resolution - 1 && y != resolution - 1) {
                     triangles[triIndex + 0] = vertexIndex;
