@@ -4,19 +4,22 @@ using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.Serialization;
-using UnityEngine.UIElements;
 
 
 public class SphericalMesh : MonoBehaviour {
-    [SerializeField] int faceResolution;
+    private const int NumCubeFaces = 6;
+    
+    [SerializeField] private int earthFaceResolution;
+    [SerializeField] private int waterFaceResolution = 300;
 
     [SerializeField] private float globeRadius = 10f;
 
-    [FormerlySerializedAs("landHeight")] [SerializeField] private float landHeightMagnitude = .2f;
+    [SerializeField] private float landHeightMagnitude = .2f;
 
-    [SerializeField] private Texture2D heightMap;
+    [FormerlySerializedAs("heightMap")] [SerializeField] private Texture2D heightMapEarth;
 
-    [SerializeField] private GameObject[] cubeFaceGameObjects;
+    [SerializeField] private GameObject[] earthCubeFaces;
+    [SerializeField] private GameObject[] waterCubeFaces;
     
     private MeshData[] _meshData;
 
@@ -25,102 +28,32 @@ public class SphericalMesh : MonoBehaviour {
     }
 
     private void Start() {
-        CreateCube();
-    }
-
-    private void SpherizeCube() {
-        for (int cubeSide = 0; cubeSide < 6; cubeSide++) {
-            Vector3[] vertices = _meshData[cubeSide].vertices;
-            int numVertices = _meshData[cubeSide].vertices.Length;
-            Vector2[] uvs = new Vector2[vertices.Length];
-
-            for (int vertex = 0; vertex < numVertices; vertex++) {
-                Vector3 pointOnSphere = PointOnCubeToPointOnSphere(vertices[vertex]);
-                Coordinate coordinate = PointToCoordinate(pointOnSphere);
-                //Vector3 coordinateToPoint = CoordinateToPoint(coordinate);
-                //Vector3 spherizedPointWithHeight = SpherizeWithHeight(coordinate, height);
-
-                uvs[vertex] = UVCoord(coordinate);
-                vertices[vertex] = SpherizeWithHeight(pointOnSphere, coordinate);
-                    //pointOnCubeToPointOnSphere + (globeRadius + height * .2f);
-                //vertices[vertex] = PointOnCubeToPointOnSphere(vertices[vertex]);
-            }
-
-            _meshData[cubeSide].uvs = uvs;
-        }
+        CreateCube(earthCubeFaces, earthFaceResolution, heightMapEarth);
+        CreateCube(waterCubeFaces, waterFaceResolution);
     }
     
-    private Vector3 SpherizeWithHeight(Vector3 pointOnCubeToPointOnSphere, Coordinate coordinate) {
-        //Vector3 coordinateToPoint = CoordinateToPoint(coordinate);
-
-        float height = SampleHeightTexture(coordinate);
-
-        Vector3 pointWithHeight = pointOnCubeToPointOnSphere * (globeRadius + height * landHeightMagnitude);
-        return pointWithHeight;
+    private void CreateWater() {
+        
     }
     
-    private float SampleHeightTexture(Coordinate coordinate) {
-        //int x = Mathf.FloorToInt(Mathf.Abs(coordinate.longitude) * heightMap.width);
-        //int y = Mathf.FloorToInt(Mathf.Abs(coordinate.latitude) * heightMap.height);
-
-        Vector2 uvCoord = UVCoord(coordinate);
-        //float normX = Mathf.InverseLerp(-Mathf.PI, Mathf.PI, coordinate.longitude); 
-        //float normY = Mathf.InverseLerp(-Mathf.PI * .5f, Mathf.PI * .5f, coordinate.latitude);
-
-        int x = Mathf.FloorToInt(uvCoord.x * heightMap.width);
-        int y = Mathf.FloorToInt(uvCoord.y * heightMap.height);
-    
-        float height = heightMap.GetPixel(x, y).grayscale;
+    private void CreateCube(GameObject[] cubeFaces, int resolution, Texture2D heightMap = null) {
+        _meshData = GenerateFaces(resolution);
         
-        return height;
-    }
-
-    private Vector2 UVCoord(Coordinate coordinate) {
-        float normX = Mathf.InverseLerp(-Mathf.PI, Mathf.PI, coordinate.longitude); 
-        float normY = Mathf.InverseLerp(-Mathf.PI * .5f, Mathf.PI * .5f, coordinate.latitude);
-
-        return new Vector2(normX, normY);
-    }
-
-    // Unit circle's circumference is 2PI radians
-
-    // Calculate latitude and longitude (in radians) from point on unit sphere
-    private Coordinate PointToCoordinate(Vector3 pointOnUnitSphere) {
-        float latitude = Mathf.Asin(pointOnUnitSphere.y);
-        float longitude = Mathf.Atan2(pointOnUnitSphere.x, -pointOnUnitSphere.z);
-        return new Coordinate(latitude, longitude);
-    }
-
-    // Calculate point on unit sphere given latitude and longitude (in radians)
-    private Vector3 CoordinateToPoint(Coordinate coordinate) {
-        float y = Mathf.Sin(coordinate.latitude);
-        float r = Mathf.Cos(coordinate.latitude);
-        float x = Mathf.Sin(coordinate.longitude) * r;
-        float z = -Mathf.Cos(coordinate.longitude) * r;
-        return new Vector3(x, y, z);
-    }
-
-    private void CreateCube() {
-        _meshData = GenerateFaces(faceResolution);
+        SpherizeCube(heightMap);
         
-        SpherizeCube();
-        
-        int numCubeSides = _meshData.Length;
-        
-        for (int i = 0; i < numCubeSides; i++) {
-            Mesh mesh = cubeFaceGameObjects[i].GetComponent<MeshFilter>().mesh;
+        for (int i = 0; i < NumCubeFaces; i++) {
+            Mesh mesh = cubeFaces[i].GetComponent<MeshFilter>().mesh;
             mesh.indexFormat = UnityEngine.Rendering.IndexFormat.UInt32;
             mesh.vertices = _meshData[i].vertices;
             mesh.triangles = _meshData[i].triangles;
+            mesh.uv = _meshData[i].uvs;
             mesh.RecalculateNormals();
             mesh.RecalculateBounds();
             mesh.RecalculateTangents();
             mesh.RecalculateUVDistributionMetrics();
-            mesh.uv = _meshData[i].uvs;
-            // uv's
         }
     }
-
+    
     private static MeshData[] GenerateFaces(int resolution) {
         MeshData[] allMeshData = new MeshData[6];
         Vector3[] faceNormals = {
@@ -171,7 +104,77 @@ public class SphericalMesh : MonoBehaviour {
 
         return new MeshData(vertices, triangles, uvs);
     }
+    
+    private void SpherizeCube(Texture2D heightMap) {
+        for (int cubeSide = 0; cubeSide < NumCubeFaces; cubeSide++) {
+            Vector3[] vertices = _meshData[cubeSide].vertices;
+            int numVertices = _meshData[cubeSide].vertices.Length;
+            Vector2[] uvs = new Vector2[vertices.Length];
 
+            for (int vertex = 0; vertex < numVertices; vertex++) {
+                Vector3 pointOnSphere = PointOnCubeToPointOnSphere(vertices[vertex]);
+                Coordinate coordinate = PointToCoordinate(pointOnSphere);
+                //Vector3 coordinateToPoint = CoordinateToPoint(coordinate);
+                //Vector3 spherizedPointWithHeight = SpherizeWithHeight(coordinate, height);
+
+                uvs[vertex] = UVCoord(coordinate);
+                vertices[vertex] = SpherizeWithHeight(pointOnSphere, coordinate, heightMap);
+                    //pointOnCubeToPointOnSphere + (globeRadius + height * .2f);
+                //vertices[vertex] = PointOnCubeToPointOnSphere(vertices[vertex]);
+            }
+
+            _meshData[cubeSide].uvs = uvs;
+        }
+    }
+    
+    private Vector3 SpherizeWithHeight(Vector3 pointOnCubeToPointOnSphere, Coordinate coordinate, Texture2D heightTexture) {
+        //Vector3 coordinateToPoint = CoordinateToPoint(coordinate);
+        float height = heightTexture == null ? 0f : SampleHeightTexture(coordinate);
+        
+        Vector3 pointWithHeight = pointOnCubeToPointOnSphere * (globeRadius + height * landHeightMagnitude);
+        return pointWithHeight;
+    }
+    
+    private float SampleHeightTexture(Coordinate coordinate) {
+        //int x = Mathf.FloorToInt(Mathf.Abs(coordinate.longitude) * heightMap.width);
+        //int y = Mathf.FloorToInt(Mathf.Abs(coordinate.latitude) * heightMap.height);
+
+        Vector2 uvCoord = UVCoord(coordinate);
+        //float normX = Mathf.InverseLerp(-Mathf.PI, Mathf.PI, coordinate.longitude); 
+        //float normY = Mathf.InverseLerp(-Mathf.PI * .5f, Mathf.PI * .5f, coordinate.latitude);
+
+        int x = Mathf.FloorToInt(uvCoord.x * heightMapEarth.width);
+        int y = Mathf.FloorToInt(uvCoord.y * heightMapEarth.height);
+    
+        float height = heightMapEarth.GetPixel(x, y).grayscale; // TODO get average of surrounding pixels?
+        
+        return height;
+    }
+
+    private Vector2 UVCoord(Coordinate coordinate) {
+        float normX = Mathf.InverseLerp(-Mathf.PI, Mathf.PI, coordinate.longitude); 
+        float normY = Mathf.InverseLerp(-Mathf.PI * .5f, Mathf.PI * .5f, coordinate.latitude);
+
+        return new Vector2(normX, normY);
+    }
+
+    // Calculate latitude and longitude (in radians) from point on unit sphere
+    private Coordinate PointToCoordinate(Vector3 pointOnUnitSphere) {
+        float latitude = Mathf.Asin(pointOnUnitSphere.y);
+        float longitude = Mathf.Atan2(pointOnUnitSphere.x, -pointOnUnitSphere.z);
+        return new Coordinate(latitude, longitude);
+    }
+
+    // Calculate point on unit sphere given latitude and longitude (in radians)
+    private Vector3 CoordinateToPoint(Coordinate coordinate) {
+        float y = Mathf.Sin(coordinate.latitude);
+        float r = Mathf.Cos(coordinate.latitude);
+        float x = Mathf.Sin(coordinate.longitude) * r;
+        float z = -Mathf.Cos(coordinate.longitude) * r;
+        return new Vector3(x, y, z);
+    }
+
+    
     //public static Vector3 PointOnCubeToPointOnSphere(Vector3 p) => Vector3.Normalize(p);
     private static Vector3 PointOnCubeToPointOnSphere(Vector3 p) {
         float x2 = p.x * p.x;

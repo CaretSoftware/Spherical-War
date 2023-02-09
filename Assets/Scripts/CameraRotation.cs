@@ -9,7 +9,7 @@ public class CameraRotation : MonoBehaviour {
     private Vector2 _cameraRotation;
     private Vector2 _lastMousePosition;
     private Vector2 _mouseVector;
-    [SerializeField] private Camera camera;
+    [SerializeField] private Camera cam;
     private Vector2 _currentVelocity;
     [SerializeField] private float smoothTime = 1f;
     [SerializeField] private float maxSpeed = 10f;
