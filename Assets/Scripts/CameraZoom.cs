@@ -19,8 +19,8 @@ public class CameraZoom : MonoBehaviour {
     
     private Transform _camTransform;
     
-    [SerializeField, Range(0f, 1f)] private float _zoom;
-    public float _targetZoom;
+    private float _zoom = 1f;
+    private float _targetZoom = 1f;
     private float zoomVelocity;
     
     private Vector3 currentLocalCameraPosition;

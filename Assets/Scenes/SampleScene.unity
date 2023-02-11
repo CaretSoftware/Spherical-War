@@ -1500,8 +1500,6 @@ MonoBehaviour:
   fov: 30
   near: 0.3
   far: 100
-  _zoom: 0
-  _targetZoom: 0
 --- !u!1 &1498050358
 GameObject:
   m_ObjectHideFlags: 0
@@ -1798,8 +1796,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d822196ad1a046f8a1448c116528ad4c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  earthAxis: {x: 0, y: -1, z: 0}
   sun: {fileID: 641584954}
-  rotation: 0
   skybox: {fileID: 1113882335}
 --- !u!1 &1860921904
 GameObject:
