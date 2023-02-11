@@ -202,7 +202,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 330585543}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: -9.63}
+  m_LocalPosition: {x: 0, y: 0, z: -6}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -250,7 +250,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 330585543}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: c5323628dc084f7693a742cffd2d360a, type: 3}
   m_Name: 
@@ -1493,8 +1493,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cam: {fileID: 330585545}
   zoomSpeed: 10
-  zoomedInPos: {x: 0, y: 0, z: -6}
-  zoomedOutPos: {x: 0, y: 0, z: -25}
+  zoomedInPos: {x: 0, y: 0, z: -25}
+  zoomedOutPos: {x: 0, y: 0, z: -6}
   zoomDampTime: 0.2
 --- !u!1 &1498050358
 GameObject:
