@@ -24,7 +24,7 @@
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "WebServerToolWindowFactoryState": "false",
-    "settings.editor.selected.configurable": "reference.settingsdialog.IDE.editor.colors.General",
+    "settings.editor.selected.configurable": "RiderCSharpLiveTemplatesSettingsId",
     "vue.rearranger.settings.migration": "true"
   },
   "keyToStringList": {
@@ -82,6 +82,7 @@
       <option name="presentableId" value="Default" />
       <updated>1675866882727</updated>
       <workItem from="1675866884549" duration="7889000" />
+      <workItem from="1676033503588" duration="5661000" />
     </task>
     <servers />
   </component>
