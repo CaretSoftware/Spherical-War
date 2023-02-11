@@ -15,6 +15,9 @@ public class CameraRotation : MonoBehaviour {
     [SerializeField] private float maxSpeed = 10f;
     private void Update()
     {
+        if (Input.GetMouseButtonDown(1))
+            _lastMousePosition = Input.mousePosition;
+
         if (Input.GetMouseButton(1)) {
             Vector2 currentMousePos = Input.mousePosition;
             Vector2 mouseDelta = currentMousePos - _lastMousePosition;
@@ -22,9 +25,9 @@ public class CameraRotation : MonoBehaviour {
             _mouseVector.y = Mathf.Clamp(_mouseVector.y, -89f, 89f);
             
             _lastMousePosition = currentMousePos;
-        } else {
-            _lastMousePosition = Input.mousePosition;
-        }
+        } 
+        
+        _lastMousePosition = Input.mousePosition;
 
         _cameraRotation = Vector2.SmoothDamp(
             _cameraRotation, 

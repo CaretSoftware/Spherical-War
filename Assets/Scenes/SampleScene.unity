@@ -951,7 +951,7 @@ Transform:
   m_GameObject: {fileID: 1003156930}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1.0738, y: 1.0738, z: 1.0738}
+  m_LocalScale: {x: 1.05, y: 1.05, z: 1.05}
   m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 717000557}
@@ -1439,6 +1439,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1312040902}
   - component: {fileID: 1312040903}
+  - component: {fileID: 1312040904}
   m_Layer: 0
   m_Name: Cameras
   m_TagString: Untagged
@@ -1478,6 +1479,23 @@ MonoBehaviour:
   cam: {fileID: 0}
   smoothTime: 0.1
   maxSpeed: 600
+--- !u!114 &1312040904
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1312040901}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f756c17c5fd442bd87b4e35432047447, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  cam: {fileID: 330585545}
+  zoomSpeed: 10
+  zoomedInPos: {x: 0, y: 0, z: -6}
+  zoomedOutPos: {x: 0, y: 0, z: -25}
+  zoomDampTime: 0.2
 --- !u!1 &1498050358
 GameObject:
   m_ObjectHideFlags: 0
@@ -1790,11 +1808,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 250950318c0d1e34a9b62720121b4d97, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  earthFaceResolution: 700
+  earthFaceResolution: 600
   waterFaceResolution: 300
   globeRadius: 5
   landHeightMagnitude: 0.5
-  heightMapEarth: {fileID: 2800000, guid: 14ed143cf56eafc4e926fbd479ab6168, type: 3}
+  heightMapEarth: {fileID: 2800000, guid: 51fe59148d1316545802e8efbf4034d9, type: 3}
   earthCubeFaces:
   - {fileID: 334622546}
   - {fileID: 1702358409}
