@@ -250,7 +250,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 330585543}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: c5323628dc084f7693a742cffd2d360a, type: 3}
   m_Name: 
@@ -1493,9 +1493,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cam: {fileID: 330585545}
   zoomSpeed: 10
+  zoomDampTime: 0.2
   zoomedInPos: {x: 0, y: 0, z: -25}
   zoomedOutPos: {x: 0, y: 0, z: -6}
-  zoomDampTime: 0.2
+  orthographicSize: 6
+  fov: 30
+  near: 0.3
+  far: 100
+  _zoom: 0
+  _targetZoom: 0
 --- !u!1 &1498050358
 GameObject:
   m_ObjectHideFlags: 0
@@ -1754,6 +1760,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1832371728}
+  - component: {fileID: 1832371729}
   m_Layer: 6
   m_Name: Sky
   m_TagString: Untagged
@@ -1779,6 +1786,21 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 43.21, z: 0}
+--- !u!114 &1832371729
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1832371727}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d822196ad1a046f8a1448c116528ad4c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sun: {fileID: 641584954}
+  rotation: 0
+  skybox: {fileID: 1113882335}
 --- !u!1 &1860921904
 GameObject:
   m_ObjectHideFlags: 0
