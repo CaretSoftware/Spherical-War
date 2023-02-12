@@ -27,7 +27,6 @@ public class CameraZoom : MonoBehaviour {
     private Vector3 cameraTargetPosition;
     private Vector3 currentVelocity;
 
-    
     private void Awake() {
         _camTransform = cam.transform;
         _aspect = (float)Screen.width / (float)Screen.height;
