@@ -1031,9 +1031,9 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 812756926}
   m_LocalRotation: {x: -0.5, y: -0.5, z: 0.5, w: 0.5}
-  m_LocalPosition: {x: 0, y: 0, z: -10}
+  m_LocalPosition: {x: 0, y: -0, z: -10}
   m_LocalScale: {x: 10, y: 10, z: 10}
-  m_ConstrainProportionsScale: 1
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1705598627}
   m_RootOrder: 0
@@ -2482,7 +2482,7 @@ Transform:
   m_GameObject: {fileID: 1705598626}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 0.3}
+  m_LocalScale: {x: 1, y: 1, z: 0.4}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 812756927}
@@ -2523,7 +2523,7 @@ MonoBehaviour:
   cam: {fileID: 330585546}
   atmosphereShadowTransform: {fileID: 1705598627}
   atmosphereShadow: {fileID: 812756929}
-  alphaFull: 0.6771653
+  color: {r: 0, g: 0, b: 0, a: 1}
 --- !u!1 &1832371727
 GameObject:
   m_ObjectHideFlags: 0
