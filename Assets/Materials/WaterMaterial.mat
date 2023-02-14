@@ -164,6 +164,7 @@ Material:
     - _Surface: 1
     - _Wave_Breaker_Intersect_Power: 57.01
     - _Wave_Color_Intensity: 0.507
+    - _Wave_Speed: 0.0037
     - _WorkflowMode: 1
     - _ZTest: 4
     - _ZWrite: 0

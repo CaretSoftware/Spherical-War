@@ -24,10 +24,10 @@ public class ViewAngleTransparency : MonoBehaviour {
         float dot = Vector3.Dot(direction, atmosphereShadowTransform.forward);
         float t = Mathf.InverseLerp(-1f, 1f, dot);
         float e = Mathf.Lerp(
-            0f, 
+            0f,
             Mathf.Lerp(
-                alphaMax * 4f, 
-                0f, 
+                alphaMax * 4f,
+                0f,
                 t),
             Ease.EaseOutExpo(t));
         float alpha = Mathf.Lerp(0f, alphaMax, Ease.EaseOutCirc(e));

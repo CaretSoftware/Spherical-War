@@ -37,7 +37,7 @@ public class CameraZoom : MonoBehaviour {
     }
 
     private void Update() {
-        _targetZoom += Input.mouseScrollDelta.y * zoomSpeed * Time.deltaTime;
+        _targetZoom += Input.mouseScrollDelta.y * zoomSpeed * Time.unscaledDeltaTime;
         _targetZoom = Mathf.Clamp01(_targetZoom);
         
         _zoom = Mathf.SmoothDamp(
@@ -50,10 +50,10 @@ public class CameraZoom : MonoBehaviour {
         cam.projectionMatrix = MatrixLerp(Ease.EaseOutCirc(_zoom));
     }
     
-    public Matrix4x4 MatrixLerp(float time) {
+    public Matrix4x4 MatrixLerp(float zoom) {
         Matrix4x4 ret = new Matrix4x4();
         for (int i = 0; i < 16; i++)
-            ret[i] = Mathf.Lerp(_perspective[i], _ortho[i], time);
+            ret[i] = Mathf.Lerp(_perspective[i], _ortho[i], zoom);
         return ret;
     }
 }
