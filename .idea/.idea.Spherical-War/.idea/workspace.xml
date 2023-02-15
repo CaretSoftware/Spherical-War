@@ -19,9 +19,13 @@
     <setting file="file://$PROJECT_DIR$/../Geographical-Adventures/Assets/Scripts/Types/City.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/../Geographical-Adventures/Assets/Scripts/Types/Coordinate.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/../SpatialAudio/Assets/Scripts/CameraController.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/Scripts/Coordinate.cs" root0="SKIP_HIGHLIGHTING" />
   </component>
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
+  </component>
+  <component name="ProblemsViewState">
+    <option name="selectedTabId" value="SWEA" />
   </component>
   <component name="ProjectId" id="2LSaLT23bgZGFtWXNH6PNzAD9lq" />
   <component name="ProjectViewState">
@@ -93,7 +97,7 @@
       <updated>1675866882727</updated>
       <workItem from="1675866884549" duration="7889000" />
       <workItem from="1676033503588" duration="21469000" />
-      <workItem from="1676139067884" duration="74475000" />
+      <workItem from="1676139067884" duration="88279000" />
     </task>
     <servers />
   </component>
@@ -102,6 +106,17 @@
   </component>
   <component name="UnityProjectConfiguration" hasMinimizedUI="true" />
   <component name="UnityUnitTestConfiguration" currentTestLauncher="EditMode" />
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
   <component name="VcsManagerConfiguration">
     <option name="CLEAR_INITIAL_COMMIT_MESSAGE" value="true" />
   </component>
