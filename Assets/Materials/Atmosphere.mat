@@ -61,7 +61,7 @@ Material:
     - _QueueControl: 0
     - _QueueOffset: 1
     - _ReceiveShadows: 0
-    - _Scene_Color_Strength: 6.84
+    - _Scene_Color_Strength: 3.95
     - _Smoothness: 0
     - _SrcBlend: 1
     - _Surface: 0
@@ -70,7 +70,7 @@ Material:
     - _ZWrite: 0
     - _ZWriteControl: 2
     m_Colors:
-    - _Atmosphere_Color: {r: 0.6939882, g: 0.6650944, b: 1, a: 1}
-    - _Atmosphere_Upper_Color: {r: 0.5849056, g: 0.5849056, b: 0.5849056, a: 1}
+    - _Atmosphere_Color: {r: 0.70504403, g: 0.735849, b: 0.48940903, a: 1}
+    - _Atmosphere_Upper_Color: {r: 1, g: 0.9946934, b: 0.9575472, a: 0.99215686}
     - _Specular_Color: {r: 1, g: 1, b: 1, a: 1}
   m_BuildTextureStacks: []

@@ -37,7 +37,7 @@ public class CameraZoom : MonoBehaviour {
     }
 
     private void Update() {
-        _targetZoom += Input.mouseScrollDelta.y * zoomSpeed * Time.unscaledDeltaTime;
+        _targetZoom -= Input.mouseScrollDelta.y * zoomSpeed * Time.unscaledDeltaTime;
         _targetZoom = Mathf.Clamp01(_targetZoom);
         
         _zoom = Mathf.SmoothDamp(
