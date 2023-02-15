@@ -1,0 +1,51 @@
+// TODO
+
+// Fix Moon Spotlight, offset its position to earth and point it at the sun
+	// make it a directional light? Lerp (Dot Product ((sun - moon), (earth - moon))) to earth for intensity
+
+// Citylights
+	// read .json
+	// place lights from their coordinates
+	// add city names and their countries for use in game
+		// static string[] countryNames; // store uint in city struct
+
+// Calendar and time
+	// Day : Month : Year
+
+// inheritance for units
+
+// A* spherical pathfinding search
+
+// Construct A* graph from height information, ocean- and lake masks
+
+// Screen Coordinate UI
+	// Meld/Split unit badges with zoom level
+		// if troops close enough for their badges to overlap; meld them together to the larger unit of which they belong to
+
+// Squad		6-10	Soldiers	Sergeant
+// Platoon		3-4	Squads	Second Lieutenant
+// Company/		3-4	Platoons	Captain | First Lieutenant | Major
+   Battery/
+   Troop
+// Battalion	3-5	Companies	Lieutenant Colonel
+// Brigade/		3-5	Batalions	Brigadier General | Colonel
+// Division		3	Brigades	Major General
+// Corps		2+	Divisions	Lieutenant General
+// Field Army	50k+	Soldiers	General
+
+// Officers
+	// Have a leveling up system for the officers where they give a bonus to the troops under their command
+
+VISUALS
+// contrails for planes
+// Nuclear Explosions
+// Ship Wakes
+// Missile trails
+// Tracer Rounds at night
+// Flares at night
+
+// Interpolate between the seasons
+	// make alpha-blend snow texture and Lerp Property value in shader for snow and ice coverage
+	// Global Warming - clamp max snow property value according to temperature
+
+// Lerp Sky Camera with scrolling as well?

@@ -8,6 +8,16 @@
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
   <component name="HighlightingSettingsPerFile">
+    <setting file="file://$PROJECT_DIR$/../Geographical-Adventures/Assets/Plugins/Seb Extra/JsonHelper.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/../Geographical-Adventures/Assets/Plugins/Seb/Easing/Ease.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/../Geographical-Adventures/Assets/Scripts/Game/City Lights/CityLight.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/../Geographical-Adventures/Assets/Scripts/Game/City Lights/CityLightGenerator.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/../Geographical-Adventures/Assets/Scripts/Game/City Lights/CityLightRenderer.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/../Geographical-Adventures/Assets/Scripts/Game/City Lights/CityLights.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/../Geographical-Adventures/Assets/Scripts/Game/World/CityReader.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/../Geographical-Adventures/Assets/Scripts/Game/World/CountryLoader.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/../Geographical-Adventures/Assets/Scripts/Types/City.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/../Geographical-Adventures/Assets/Scripts/Types/Coordinate.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/../SpatialAudio/Assets/Scripts/CameraController.cs" root0="SKIP_HIGHLIGHTING" />
   </component>
   <component name="MarkdownSettingsMigration">
@@ -24,7 +34,7 @@
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "WebServerToolWindowFactoryState": "false",
-    "settings.editor.selected.configurable": "RiderCSharpLiveTemplatesSettingsId",
+    "settings.editor.selected.configurable": "RiderCSharpFileTemplatesSettingsId",
     "vue.rearranger.settings.migration": "true"
   },
   "keyToStringList": {
@@ -82,7 +92,8 @@
       <option name="presentableId" value="Default" />
       <updated>1675866882727</updated>
       <workItem from="1675866884549" duration="7889000" />
-      <workItem from="1676033503588" duration="5661000" />
+      <workItem from="1676033503588" duration="21469000" />
+      <workItem from="1676139067884" duration="74475000" />
     </task>
     <servers />
   </component>

@@ -1,131 +1,99 @@
-using System;
-using System.Linq;
-using System.Text;
+﻿using System;
+using System.Collections;
+using Unity.VisualScripting;
+using UnityEditor.AssetImporters;
+using UnityEngine;
 
-// @author Egor Grishechko https://egorikas.com/max-and-min-heap-implementation-with-csharp/
 public class Heap<T> where T : IComparable {
-    private const int DefaultSize = 10;
-    private T[] _heap;
-    private int _size;
-    private bool _maxHeap;
+    private const int DefaultCapacity = 12;
+    private int currentSize;
+    private T[] array;
     
-    public Heap(int size = DefaultSize, bool maxHeap = true) {
-        _heap = new T[size];
-        _maxHeap = maxHeap;
+    public Heap(int capacity = DefaultCapacity) {
+        currentSize = 0;
+        array = new T[capacity + 1];
     }
 
-    private int GetLeftChildIndex(int elementIndex) => 2 * elementIndex + 1;
-    private int GetRightChildIndex(int elementIndex) => 2 * elementIndex + 2;
-    private int GetParentIndex(int elementIndex) => (elementIndex - 1) / 2;
+    public Heap(T[] items) {
+        currentSize = items.Length;
+        array = new T[(currentSize + 2) * 11 / 10];
 
-    private bool HasLeftChild(int elementIndex) => GetLeftChildIndex(elementIndex) < _size;
-    private bool HasRightChild(int elementIndex) => GetRightChildIndex(elementIndex) < _size;
-    private bool IsRoot(int elementIndex) => elementIndex == 0;
-
-    private T GetLeftChild(int elementIndex) => _heap[GetLeftChildIndex(elementIndex)];
-    private T GetRightChild(int elementIndex) => _heap[GetRightChildIndex(elementIndex)];
-    private T GetParent(int elementIndex) => _heap[GetParentIndex(elementIndex)];
-
-    private void Swap(int firstIndex, int secondIndex) {
-        (_heap[firstIndex], _heap[secondIndex]) = (_heap[secondIndex], _heap[firstIndex]);
+        int i = 1;
+        foreach (T item in items)
+            array[i++] = item;
+        BuildHeap();
     }
 
-    public bool IsEmpty() {
-        return _size == 0;
-    }
-
-    public int Size() {
-        return _size;
-    }
-
-    public T Peek() {
-        if (_size <= 0)
-            throw new IndexOutOfRangeException();
-
-        return _heap[0];
-    }
-
-    public T Pop() {
+    /// <summary>
+    /// Insert into the priority queue, maintaining heap order
+    /// Duplicates are allowed
+    /// </summary>
+    /// <param name="x">The item to insert</param>
+    public void Insert(T x) {
+        if (currentSize == array.Length - 1)
+            EnlargeArray(array.Length * 2 + 1);
         
-        if (_size <= 0)
-            throw new IndexOutOfRangeException("Heap empty");
-
-        T result = _heap[0];
-
-        _heap[0] = _heap[_size - 1];
-        _size--;
-
-        ReCalculateDown();
-        
-        return result;
+        // percolate up
+        int hole = ++currentSize;
+        for (array[0] = x; x.CompareTo(array[hole/2]) < 0; hole /= 2) {
+            array[hole] = array[hole / 2];
+        }   
+        array[hole] = x;
     }
 
-    public void Add(T element) {
-        if (_size == _heap.Length)
-            DoubleHeap();
-
-        _heap[_size] = element;
-        _size++;
-        ReCalculateUp();
+    public T FindMin() {
+        if(Empty())
+            throw new UnderflowException( "Heap is empty" );
+        return array[1];
     }
 
-    private void ReCalculateDown() {
-        int index = 0;
-        while (HasLeftChild(index)) {
-            var biggerIndex = GetLeftChildIndex(index);
-            if (HasRightChild(index) &&
-                Compare(GetRightChild(index), GetLeftChild(index)) > 0) {
-                biggerIndex = GetRightChildIndex(index);
-            }
+    public T DeleteMin() {
+        if (Empty())
+            throw new UnderflowException("Cannot perform Delete operation on an empty Heap");
 
-            if (_heap[biggerIndex] != null && _heap[index] != null 
-                && Compare(_heap[biggerIndex], _heap[index]) < 0) {
+        T minItem = FindMin();
+        array[1] = array[currentSize--];
+        PercolateDown(1);
+
+        return minItem;
+    }
+
+    public bool Empty() {
+        return currentSize == 0;
+    }
+    
+    public void MakeEmpty() {}
+
+    private void PercolateDown(int hole) {
+        int child;
+        T tmp = array[hole];
+
+        for ( ; hole * 2 <= currentSize; hole = child) {
+            child = hole * 2;
+            if (child != currentSize && array[child + 1].CompareTo(array[child]) < 0)
+                child++;
+            if (array[child].CompareTo(tmp) < 0)
+                array[hole] = array[child];
+            else
                 break;
-            }
-
-            Swap(biggerIndex, index);
-            index = biggerIndex;
         }
+
+        array[hole] = tmp;
     }
 
-    private void ReCalculateUp() {
-        var index = _size - 1;
-        while (!IsRoot(index) && 
-               Compare(_heap[index],  GetParent(index)) > 0)
-        {
-            int parentIndex = GetParentIndex(index);
-            Swap(parentIndex, index);
-            index = parentIndex;
-        }
+    private void BuildHeap() {
+        for(int i = currentSize / 2; i > 0; i--)
+            PercolateDown(i);
     }
 
-    private int Compare(T element, T contender) {
-        int val = element.CompareTo(contender);
-        val = _maxHeap ? val : -val;
-        
-        return val;
+    private void EnlargeArray(int newSize) {
+        T [] old = array;
+        array = new T[ newSize ];
+        for( int i = 0; i < old.Length; i++ )
+            array[ i ] = old[ i ];
     }
+}
 
-    public override string ToString() {
-        StringBuilder sb = new StringBuilder("[");
-        
-        _heap.ToList().ForEach(i => {
-            if (sb.Length > 1) // if before first element in heap, don't add ", "
-                sb.Append(", ");
-            
-            sb.Append(i);
-        });
-        sb.Append("]");
-        return sb.ToString();
-    }
-    
-    private void DoubleHeap()
-    {
-        var copy = new T[_heap.Length * 2];
-        for (int i = 0; i < _heap.Length; i++)
-        {
-            copy[i] = _heap[i];
-        }
-        _heap = copy;
-    }
+public class UnderflowException : Exception {
+    public UnderflowException(string message): base(message) { }
 }

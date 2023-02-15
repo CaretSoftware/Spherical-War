@@ -9,10 +9,13 @@ using UnityEngine.Serialization;
 public class SphericalMesh : MonoBehaviour {
     private const int NumCubeFaces = 6;
     
-    [SerializeField] private int earthFaceResolution;
-    [SerializeField] private int waterFaceResolution = 300;
+    [SerializeField] private int earthFaceResolution = 512;
+    [SerializeField] private int waterFaceResolution = 256;
+    [SerializeField] private int moonFaceResolution = 64;
 
     [SerializeField] private float globeRadius = 10f;
+    [SerializeField] private float oceanRadius = 10f;
+    [SerializeField] private float moonRadius = 5f;
 
     [SerializeField] private float landHeightMagnitude = .2f;
 
@@ -20,26 +23,20 @@ public class SphericalMesh : MonoBehaviour {
 
     [SerializeField] private GameObject[] earthCubeFaces;
     [SerializeField] private GameObject[] waterCubeFaces;
+    [SerializeField] private GameObject[] moonCubeFaces;
     
     private MeshData[] _meshData;
 
-    private void Awake() {
-        
+    private void Start() {
+        CreateCube(earthCubeFaces, earthFaceResolution, globeRadius, heightMapEarth);
+        CreateCube(waterCubeFaces, waterFaceResolution, oceanRadius);
+        CreateCube(moonCubeFaces, moonFaceResolution, moonRadius);
     }
 
-    private void Start() {
-        CreateCube(earthCubeFaces, earthFaceResolution, heightMapEarth);
-        CreateCube(waterCubeFaces, waterFaceResolution);
-    }
-    
-    private void CreateWater() {
-        
-    }
-    
-    private void CreateCube(GameObject[] cubeFaces, int resolution, Texture2D heightMap = null) {
+    private void CreateCube(GameObject[] cubeFaces, int resolution, float radius, Texture2D heightMap = null) {
         _meshData = GenerateFaces(resolution);
         
-        SpherizeCube(heightMap);
+        SpherizeCube(heightMap, radius);
         
         for (int i = 0; i < NumCubeFaces; i++) {
             Mesh mesh = cubeFaces[i].GetComponent<MeshFilter>().mesh;
@@ -47,6 +44,7 @@ public class SphericalMesh : MonoBehaviour {
             mesh.vertices = _meshData[i].vertices;
             mesh.triangles = _meshData[i].triangles;
             mesh.uv = _meshData[i].uvs;
+            //mesh.normals[i] =  ;
             mesh.RecalculateNormals();
             mesh.RecalculateBounds();
             mesh.RecalculateTangents();
@@ -105,7 +103,7 @@ public class SphericalMesh : MonoBehaviour {
         return new MeshData(vertices, triangles, uvs);
     }
     
-    private void SpherizeCube(Texture2D heightMap) {
+    private void SpherizeCube(Texture2D heightMap, float radius) {
         for (int cubeSide = 0; cubeSide < NumCubeFaces; cubeSide++) {
             Vector3[] vertices = _meshData[cubeSide].vertices;
             int numVertices = _meshData[cubeSide].vertices.Length;
@@ -118,7 +116,7 @@ public class SphericalMesh : MonoBehaviour {
                 //Vector3 spherizedPointWithHeight = SpherizeWithHeight(coordinate, height);
 
                 uvs[vertex] = UVCoord(coordinate);
-                vertices[vertex] = SpherizeWithHeight(pointOnSphere, coordinate, heightMap);
+                vertices[vertex] = SpherizeWithHeight(pointOnSphere, coordinate, radius, heightMap);
                     //pointOnCubeToPointOnSphere + (globeRadius + height * .2f);
                 //vertices[vertex] = PointOnCubeToPointOnSphere(vertices[vertex]);
             }
@@ -127,25 +125,24 @@ public class SphericalMesh : MonoBehaviour {
         }
     }
     
-    private Vector3 SpherizeWithHeight(Vector3 pointOnCubeToPointOnSphere, Coordinate coordinate, Texture2D heightTexture) {
+    private Vector3 SpherizeWithHeight(Vector3 pointOnCubeToPointOnSphere, Coordinate coordinate, float radius, Texture2D heightTexture) {
         //Vector3 coordinateToPoint = CoordinateToPoint(coordinate);
         float height = heightTexture == null ? 0f : SampleHeightTexture(coordinate);
         
-        Vector3 pointWithHeight = pointOnCubeToPointOnSphere * (globeRadius + height * landHeightMagnitude);
+        Vector3 pointWithHeight = pointOnCubeToPointOnSphere * (radius + height * landHeightMagnitude);
         return pointWithHeight;
     }
     
     private float SampleHeightTexture(Coordinate coordinate) {
-        //int x = Mathf.FloorToInt(Mathf.Abs(coordinate.longitude) * heightMap.width);
-        //int y = Mathf.FloorToInt(Mathf.Abs(coordinate.latitude) * heightMap.height);
-
+        
+        // TODO fix seam at edge of texture
+        // TODO fix precision issue
+        
         Vector2 uvCoord = UVCoord(coordinate);
-        //float normX = Mathf.InverseLerp(-Mathf.PI, Mathf.PI, coordinate.longitude); 
-        //float normY = Mathf.InverseLerp(-Mathf.PI * .5f, Mathf.PI * .5f, coordinate.latitude);
 
-        int x = Mathf.FloorToInt(uvCoord.x * heightMapEarth.width);
-        int y = Mathf.FloorToInt(uvCoord.y * heightMapEarth.height);
-    
+        int x = Mathf.RoundToInt(uvCoord.x * heightMapEarth.width);
+        int y = Mathf.RoundToInt(uvCoord.y * heightMapEarth.height);
+
         float height = heightMapEarth.GetPixel(x, y).grayscale; // TODO get average of surrounding pixels?
         
         return height;
