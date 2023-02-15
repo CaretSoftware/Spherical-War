@@ -2731,9 +2731,10 @@ MonoBehaviour:
   earth: {fileID: 1860921906}
   moon: {fileID: 1136661067}
   directionalLight: {fileID: 1123858803}
-  maxIntensity: 10
+  maxIntensity: 0.1
   intensity: 0
   dot: 0
+  fullness: 0
 --- !u!1 &1860921904
 GameObject:
   m_ObjectHideFlags: 0
