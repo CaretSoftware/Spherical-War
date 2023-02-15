@@ -111,12 +111,12 @@ public class SphericalMesh : MonoBehaviour {
 
             for (int vertex = 0; vertex < numVertices; vertex++) {
                 Vector3 pointOnSphere = PointOnCubeToPointOnSphere(vertices[vertex]);
-                Coordinate coordinate = PointToCoordinate(pointOnSphere);
-                //Vector3 coordinateToPoint = CoordinateToPoint(coordinate);
-                //Vector3 spherizedPointWithHeight = SpherizeWithHeight(coordinate, height);
+                CoordinateP coordinateP = PointToCoordinate(pointOnSphere);
+                //Vector3 coordinateToPoint = CoordinateToPoint(coordinateP);
+                //Vector3 spherizedPointWithHeight = SpherizeWithHeight(coordinateP, height);
 
-                uvs[vertex] = UVCoord(coordinate);
-                vertices[vertex] = SpherizeWithHeight(pointOnSphere, coordinate, radius, heightMap);
+                uvs[vertex] = UVCoord(coordinateP);
+                vertices[vertex] = SpherizeWithHeight(pointOnSphere, coordinateP, radius, heightMap);
                     //pointOnCubeToPointOnSphere + (globeRadius + height * .2f);
                 //vertices[vertex] = PointOnCubeToPointOnSphere(vertices[vertex]);
             }
@@ -125,20 +125,20 @@ public class SphericalMesh : MonoBehaviour {
         }
     }
     
-    private Vector3 SpherizeWithHeight(Vector3 pointOnCubeToPointOnSphere, Coordinate coordinate, float radius, Texture2D heightTexture) {
-        //Vector3 coordinateToPoint = CoordinateToPoint(coordinate);
-        float height = heightTexture == null ? 0f : SampleHeightTexture(coordinate);
+    private Vector3 SpherizeWithHeight(Vector3 pointOnCubeToPointOnSphere, CoordinateP coordinateP, float radius, Texture2D heightTexture) {
+        //Vector3 coordinateToPoint = CoordinateToPoint(coordinateP);
+        float height = heightTexture == null ? 0f : SampleHeightTexture(coordinateP);
         
         Vector3 pointWithHeight = pointOnCubeToPointOnSphere * (radius + height * landHeightMagnitude);
         return pointWithHeight;
     }
     
-    private float SampleHeightTexture(Coordinate coordinate) {
+    private float SampleHeightTexture(CoordinateP coordinateP) {
         
         // TODO fix seam at edge of texture
         // TODO fix precision issue
         
-        Vector2 uvCoord = UVCoord(coordinate);
+        Vector2 uvCoord = UVCoord(coordinateP);
 
         int x = Mathf.RoundToInt(uvCoord.x * heightMapEarth.width);
         int y = Mathf.RoundToInt(uvCoord.y * heightMapEarth.height);
@@ -148,26 +148,26 @@ public class SphericalMesh : MonoBehaviour {
         return height;
     }
 
-    private Vector2 UVCoord(Coordinate coordinate) {
-        float normX = Mathf.InverseLerp(-Mathf.PI, Mathf.PI, coordinate.longitude); 
-        float normY = Mathf.InverseLerp(-Mathf.PI * .5f, Mathf.PI * .5f, coordinate.latitude);
+    private Vector2 UVCoord(CoordinateP coordinateP) {
+        float normX = Mathf.InverseLerp(-Mathf.PI, Mathf.PI, coordinateP.longitude); 
+        float normY = Mathf.InverseLerp(-Mathf.PI * .5f, Mathf.PI * .5f, coordinateP.latitude);
 
         return new Vector2(normX, normY);
     }
 
     // Calculate latitude and longitude (in radians) from point on unit sphere
-    private Coordinate PointToCoordinate(Vector3 pointOnUnitSphere) {
+    private CoordinateP PointToCoordinate(Vector3 pointOnUnitSphere) {
         float latitude = Mathf.Asin(pointOnUnitSphere.y);
         float longitude = Mathf.Atan2(pointOnUnitSphere.x, -pointOnUnitSphere.z);
-        return new Coordinate(latitude, longitude);
+        return new CoordinateP(latitude, longitude);
     }
 
     // Calculate point on unit sphere given latitude and longitude (in radians)
-    private Vector3 CoordinateToPoint(Coordinate coordinate) {
-        float y = Mathf.Sin(coordinate.latitude);
-        float r = Mathf.Cos(coordinate.latitude);
-        float x = Mathf.Sin(coordinate.longitude) * r;
-        float z = -Mathf.Cos(coordinate.longitude) * r;
+    private Vector3 CoordinateToPoint(CoordinateP coordinateP) {
+        float y = Mathf.Sin(coordinateP.latitude);
+        float r = Mathf.Cos(coordinateP.latitude);
+        float x = Mathf.Sin(coordinateP.longitude) * r;
+        float z = -Mathf.Cos(coordinateP.longitude) * r;
         return new Vector3(x, y, z);
     }
 
@@ -185,8 +185,8 @@ public class SphericalMesh : MonoBehaviour {
     }
 }
 
-public struct Coordinate {
-    public Coordinate(float latitude, float longitude) {
+public struct CoordinateP {
+    public CoordinateP(float latitude, float longitude) {
         this.longitude = longitude;
         this.latitude = latitude;
     }

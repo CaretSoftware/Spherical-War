@@ -1,24 +1,25 @@
-﻿using System;
+﻿using UnityEngine;
+using System;
 using System.Collections;
-using Unity.VisualScripting;
-using UnityEditor.AssetImporters;
-using UnityEngine;
+using System.Collections.Generic;
 
 public class Heap<T> where T : IComparable {
     private const int DefaultCapacity = 12;
     private int currentSize;
     private T[] array;
-    
+    private HashSet<T> duplicateCheckSet;
+
     public Heap(int capacity = DefaultCapacity) {
         currentSize = 0;
         array = new T[capacity + 1];
+        duplicateCheckSet = new HashSet<T>();
     }
 
     public Heap(T[] items) {
         currentSize = items.Length;
         array = new T[(currentSize + 2) * 11 / 10];
-
-        int i = 1;
+        duplicateCheckSet = new HashSet<T>(items);
+        int i = 1; // use 0 index and preincrement operator instead?
         foreach (T item in items)
             array[i++] = item;
         BuildHeap();
@@ -30,6 +31,9 @@ public class Heap<T> where T : IComparable {
     /// </summary>
     /// <param name="x">The item to insert</param>
     public void Insert(T x) {
+        if (!duplicateCheckSet.Add(x))
+            return;
+
         if (currentSize == array.Length - 1)
             EnlargeArray(array.Length * 2 + 1);
         
@@ -41,7 +45,7 @@ public class Heap<T> where T : IComparable {
         array[hole] = x;
     }
 
-    public T FindMin() {
+    public T Peek() {
         if(Empty())
             throw new UnderflowException( "Heap is empty" );
         return array[1];
@@ -51,7 +55,8 @@ public class Heap<T> where T : IComparable {
         if (Empty())
             throw new UnderflowException("Cannot perform Delete operation on an empty Heap");
 
-        T minItem = FindMin();
+        T minItem = Peek();
+        duplicateCheckSet.Remove(minItem);
         array[1] = array[currentSize--];
         PercolateDown(1);
 
@@ -61,8 +66,11 @@ public class Heap<T> where T : IComparable {
     public bool Empty() {
         return currentSize == 0;
     }
-    
-    public void MakeEmpty() {}
+
+    public void MakeEmpty() {
+        duplicateCheckSet.Clear();;
+        currentSize = 0;
+    }
 
     private void PercolateDown(int hole) {
         int child;
