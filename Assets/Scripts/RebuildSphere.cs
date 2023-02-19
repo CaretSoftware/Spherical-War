@@ -19,9 +19,10 @@ public class RebuildSphere : MonoBehaviour{
     }
  
     public static void ResetSphere(Mesh sphere) {
-         sphere.vertices = RebuildSphere.vertices;
-         sphere.normals = RebuildSphere.normals;
-         sphere.uv = RebuildSphere.uvs;
-         sphere.triangles = RebuildSphere.triangles;
+         //sphere.vertices = RebuildSphere.vertices;
+         sphere.RecalculateNormals();
+         //sphere.normals = RebuildSphere.normals;
+         //sphere.uv = RebuildSphere.uvs;
+         //sphere.triangles = RebuildSphere.triangles;
     }
 }
