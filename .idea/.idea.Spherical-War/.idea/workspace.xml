@@ -38,6 +38,7 @@
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "WebServerToolWindowFactoryState": "false",
+    "nodejs_package_manager_path": "npm",
     "settings.editor.selected.configurable": "RiderCSharpFileTemplatesSettingsId",
     "vue.rearranger.settings.migration": "true"
   },
@@ -98,6 +99,7 @@
       <workItem from="1675866884549" duration="7889000" />
       <workItem from="1676033503588" duration="21469000" />
       <workItem from="1676139067884" duration="88279000" />
+      <workItem from="1676813167770" duration="986000" />
     </task>
     <servers />
   </component>
