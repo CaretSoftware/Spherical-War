@@ -190,9 +190,6 @@
             "m_Id": "01806a7ca4bf4e54a537edfad6f5232e"
         },
         {
-            "m_Id": "efe3d3753140452c9883078dd4a19ae5"
-        },
-        {
             "m_Id": "c752828963ab4b92b3642a48280acf72"
         },
         {
@@ -1861,10 +1858,10 @@
         "m_Expanded": true,
         "m_Position": {
             "serializedVersion": "2",
-            "x": -543.000244140625,
-            "y": 341.0,
-            "width": 157.00021362304688,
-            "height": 34.00006103515625
+            "x": -642.9999389648438,
+            "y": 2060.0,
+            "width": 156.99993896484376,
+            "height": 34.0
         }
     },
     "m_Slots": [
@@ -6680,29 +6677,6 @@
 
 {
     "m_SGVersion": 0,
-    "m_Type": "UnityEditor.ShaderGraph.Vector3MaterialSlot",
-    "m_ObjectId": "dc5c02b712b7415d87085591662a1537",
-    "m_Id": 0,
-    "m_DisplayName": "Out",
-    "m_SlotType": 1,
-    "m_Hidden": false,
-    "m_ShaderOutputName": "Out",
-    "m_StageCapability": 3,
-    "m_Value": {
-        "x": 0.0,
-        "y": 0.0,
-        "z": 1.0
-    },
-    "m_DefaultValue": {
-        "x": 0.0,
-        "y": 0.0,
-        "z": 0.0
-    },
-    "m_Labels": []
-}
-
-{
-    "m_SGVersion": 0,
     "m_Type": "UnityEditor.ShaderGraph.DynamicVectorMaterialSlot",
     "m_ObjectId": "dd5179338ec547b8a706f173a46367cb",
     "m_Id": 0,
@@ -7282,41 +7256,6 @@
         "e32": 0.0,
         "e33": 1.0
     }
-}
-
-{
-    "m_SGVersion": 0,
-    "m_Type": "UnityEditor.ShaderGraph.NormalVectorNode",
-    "m_ObjectId": "efe3d3753140452c9883078dd4a19ae5",
-    "m_Group": {
-        "m_Id": ""
-    },
-    "m_Name": "Normal Vector",
-    "m_DrawState": {
-        "m_Expanded": true,
-        "m_Position": {
-            "serializedVersion": "2",
-            "x": -2215.0,
-            "y": 2614.0,
-            "width": 208.0,
-            "height": 315.0
-        }
-    },
-    "m_Slots": [
-        {
-            "m_Id": "dc5c02b712b7415d87085591662a1537"
-        }
-    ],
-    "synonyms": [
-        "surface direction"
-    ],
-    "m_Precision": 0,
-    "m_PreviewExpanded": true,
-    "m_PreviewMode": 2,
-    "m_CustomColors": {
-        "m_SerializableColors": []
-    },
-    "m_Space": 0
 }
 
 {
