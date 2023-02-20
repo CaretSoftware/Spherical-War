@@ -1,5 +1,13 @@
 {
   "dependencies": {
+    "com.jimmycushnie.noisynodes": {
+      "version": "file:C:/Users/Patrik/UnityProjects/Noisy-Nodes",
+      "depth": 0,
+      "source": "local",
+      "dependencies": {
+        "com.unity.shadergraph": "7.1.8"
+      }
+    },
     "com.unity.burst": {
       "version": "1.8.2",
       "depth": 1,

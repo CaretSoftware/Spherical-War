@@ -36,22 +36,37 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
+    - _Absorption: 1.79
     - _AlphaClip: 0
     - _Blend: 0
     - _CastShadows: 1
+    - _Cloud_Alpha: 0.23
+    - _Cloud_Power: 50.59
+    - _Cloud_Scale: 0.3
     - _Cull: 2
+    - _Distort_Scale: -0.23
+    - _Distort_Speed: -0.4
     - _DstBlend: 10
+    - _Octave1Scale: 0.9
+    - _Octave1Speed: -0.01
+    - _Octave2Scale: 1.5
+    - _Octave2Speed: -0.03
+    - _Octave3Scale: 0.8
+    - _Octave3Speed: 0
+    - _Position_Offset: 0.108
+    - _Prevailing_Wind_Direction: -0.51
     - _QueueControl: 0
     - _QueueOffset: 0
     - _ReceiveShadows: 1
-    - _Sphere_Thickness: 0.415
+    - _Sphere_Thickness: 0.218
     - _SrcBlend: 5
     - _Surface: 1
     - _WorkflowMode: 1
     - _ZTest: 4
     - _ZWrite: 0
     - _ZWriteControl: 0
-    m_Colors: []
+    m_Colors:
+    - _Cloud_Color: {r: 0.3662563, g: 0.36329654, b: 0.49056602, a: 1}
   m_BuildTextureStacks: []
 --- !u!114 &8662805374932960950
 MonoBehaviour:
