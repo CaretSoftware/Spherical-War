@@ -669,10 +669,10 @@
         "m_Expanded": true,
         "m_Position": {
             "serializedVersion": "2",
-            "x": 118.99994659423828,
-            "y": -188.9999542236328,
-            "width": 208.00003051757813,
-            "height": 325.99993896484377
+            "x": -268.0,
+            "y": -186.00003051757813,
+            "width": 208.00001525878907,
+            "height": 326.0
         }
     },
     "m_Slots": [
@@ -889,9 +889,9 @@
         "m_Expanded": true,
         "m_Position": {
             "serializedVersion": "2",
-            "x": -136.0000762939453,
-            "y": -27.999950408935548,
-            "width": 136.0000457763672,
+            "x": -523.0,
+            "y": -24.999980926513673,
+            "width": 136.00003051757813,
             "height": 33.999969482421878
         }
     },
@@ -1329,9 +1329,9 @@
         "m_Expanded": true,
         "m_Position": {
             "serializedVersion": "2",
-            "x": -317.0000305175781,
-            "y": 137.0,
-            "width": 120.00001525878906,
+            "x": -704.0,
+            "y": 139.99996948242188,
+            "width": 120.0,
             "height": 149.0
         }
     },
@@ -1915,9 +1915,9 @@
         "m_Expanded": true,
         "m_Position": {
             "serializedVersion": "2",
-            "x": -176.0000457763672,
-            "y": -74.99995422363281,
-            "width": 176.00001525878907,
+            "x": -563.0,
+            "y": -71.99998474121094,
+            "width": 176.00003051757813,
             "height": 33.99996566772461
         }
     },
@@ -2024,9 +2024,9 @@
         "m_Expanded": true,
         "m_Position": {
             "serializedVersion": "2",
-            "x": 118.99994659423828,
-            "y": 166.0,
-            "width": 208.00003051757813,
+            "x": -268.0,
+            "y": 168.99996948242188,
+            "width": 208.00001525878907,
             "height": 278.0
         }
     },
@@ -2230,7 +2230,7 @@
     "m_ZWriteControl": 0,
     "m_AlphaMode": 0,
     "m_RenderFace": 2,
-    "m_AlphaClip": false,
+    "m_AlphaClip": true,
     "m_CastShadows": false,
     "m_ReceiveShadows": false,
     "m_CustomEditorGUI": "",
@@ -3234,9 +3234,9 @@
         "m_Expanded": true,
         "m_Position": {
             "serializedVersion": "2",
-            "x": -102.00001525878906,
-            "y": 13.999998092651368,
-            "width": 127.9999771118164,
+            "x": -489.0,
+            "y": 16.999967575073243,
+            "width": 128.00003051757813,
             "height": 94.00000762939453
         }
     },

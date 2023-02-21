@@ -47,6 +47,7 @@ Material:
     - _DensityScale: 0.3
     - _LightAbsorb: 1.75
     - _LightStepSize: -0.1
+    - _MinAlphaThreshold: 0
     - _NumLightSteps: 20.26
     - _NumSteps: 64
     - _QueueControl: 0
