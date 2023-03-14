@@ -6,7 +6,7 @@ using System.Runtime.InteropServices.WindowsRuntime;
 using Unity.Mathematics;
 using UnityEngine;
 
-public class CSV : MonoBehaviour {
+public class CSVReader : MonoBehaviour {
 
     [SerializeField] private TextAsset textAsset;
     [SerializeField] private GameObject cityPrefab;
@@ -79,7 +79,7 @@ public class CSV : MonoBehaviour {
             GameObject go = Instantiate(cityPrefab, point, quaternion.identity, this.transform);
 
             float size = Mathf.InverseLerp(0f, 39105000f, population);
-            go.transform.localScale = Vector3.Lerp( Vector3.one * citySizeMin, Vector3.one * citySizeMax, size);
+            go.transform.localScale = Vector3.Lerp( Vector3.one * citySizeMin, Vector3.one * citySizeMax, Ease.EaseOutCubic(size));
         }
     }
 }
