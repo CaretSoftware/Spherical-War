@@ -9,6 +9,9 @@ public class CameraZoom : MonoBehaviour {
     [SerializeField] private Vector3 zoomedInPos;
     [SerializeField] private Vector3 zoomedOutPos;
 
+    [SerializeField] private float minFOV = 60f;
+    [SerializeField] private float maxFOV = 60f;
+    
     [SerializeField] private float orthographicSize = 12f;
     [SerializeField] private float fov = 80f;
     [SerializeField] private float near = .3f;
@@ -19,8 +22,8 @@ public class CameraZoom : MonoBehaviour {
     
     private Transform _camTransform;
     
-    private float _zoom = 1f;
-    private float _targetZoom = 1f;
+    private float _zoom = 0f;
+    private float _targetZoom = 0f;
     private float zoomVelocity;
     
     private Vector3 currentLocalCameraPosition;
@@ -37,17 +40,19 @@ public class CameraZoom : MonoBehaviour {
     }
 
     private void Update() {
-        _targetZoom -= Input.mouseScrollDelta.y * zoomSpeed * Time.unscaledDeltaTime;
+        _targetZoom += Input.mouseScrollDelta.y * zoomSpeed;
         _targetZoom = Mathf.Clamp01(_targetZoom);
-        
+
         _zoom = Mathf.SmoothDamp(
             _zoom,
             _targetZoom,
             ref zoomVelocity,
             zoomDampTime);
 
-        _camTransform.localPosition = Vector3.Lerp(zoomedOutPos, zoomedInPos, _zoom);
-        cam.projectionMatrix = MatrixLerp(Ease.EaseOutCirc(_zoom));
+        cam.fieldOfView = Mathf.Lerp(minFOV, maxFOV, _zoom);
+
+        _camTransform.localPosition = Vector3.Lerp(zoomedOutPos, zoomedInPos, Ease.EaseOutCirc(_zoom));
+        //cam.projectionMatrix = MatrixLerp(Ease.EaseOutCirc(_zoom));
     }
     
     public Matrix4x4 MatrixLerp(float zoom) {

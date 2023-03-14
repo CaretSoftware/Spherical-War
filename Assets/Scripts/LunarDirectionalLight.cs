@@ -11,6 +11,7 @@ public class LunarDirectionalLight : MonoBehaviour {
     public float intensity;
     public float dot;
     public float fullness;
+    
     private void Update() {
         Vector3 position = moon.position;
         Vector3 sunDirection = (sun.position - position).normalized;
